@@ -214,6 +214,7 @@ def count_accuracy(B_true, B_est):
         tpr: (true positive) / condition positive
         fpr: (reverse + false positive) / condition negative
         shd: undirected extra + undirected missing + reverse
+        shd_skeleton: undirected extra + undirected missing
         nnz: prediction positive
     """
     if (B_est == -1).any():  # cpdag
@@ -257,5 +258,6 @@ def count_accuracy(B_true, B_est):
     extra_lower = np.setdiff1d(pred_lower, cond_lower, assume_unique=True)
     missing_lower = np.setdiff1d(cond_lower, pred_lower, assume_unique=True)
     shd = len(extra_lower) + len(missing_lower) + len(reverse)
-    return {'fdr': fdr, 'tpr': tpr, 'fpr': fpr, 'shd': shd, 'nnz': pred_size}
+    shd_skeleton = len(extra_lower) + len(missing_lower) 
+    return {'fdr': fdr, 'tpr': tpr, 'fpr': fpr, 'shd': shd, 'shd_skeleton':shd_skeleton, 'nnz': pred_size}
 
